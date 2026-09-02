@@ -1,0 +1,476 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:travel-reality-copilot:trip-state:0.1.0",
+  "title": "AI Travel Reality Copilot Trip State",
+  "description": "Canonical cross-skill state. Conversation transcripts and UI-only state are intentionally excluded.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "state_id",
+    "revision",
+    "current_phase",
+    "trip",
+    "traveler",
+    "preferences",
+    "route_skeleton",
+    "place_discovery",
+    "lodging",
+    "dining",
+    "itinerary",
+    "validation",
+    "decisions",
+    "pending_actions",
+    "verification_queue",
+    "updated_at"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.1.0" },
+    "state_id": { "type": "string", "minLength": 1 },
+    "revision": { "type": "integer", "minimum": 0 },
+    "status": {
+      "enum": ["collecting", "planning", "reviewing", "roadbook_ready", "archived"]
+    },
+    "current_phase": {
+      "enum": [
+        "travel_boundary",
+        "preferences",
+        "route_skeleton",
+        "place_discovery",
+        "lodging",
+        "dining",
+        "itinerary_arrangement",
+        "route_validation",
+        "roadbook"
+      ]
+    },
+    "active_scope": { "$ref": "#/$defs/scope" },
+    "trip": { "$ref": "#/$defs/trip" },
+    "traveler": { "$ref": "#/$defs/traveler" },
+    "preferences": { "$ref": "#/$defs/preferences" },
+    "route_skeleton": { "$ref": "#/$defs/routeSkeleton" },
+    "place_discovery": { "$ref": "#/$defs/placeDiscovery" },
+    "lodging": { "$ref": "#/$defs/lodging" },
+    "dining": { "$ref": "#/$defs/dining" },
+    "itinerary": { "$ref": "#/$defs/itinerary" },
+    "validation": { "$ref": "#/$defs/validation" },
+    "decisions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/decision" }
+    },
+    "pending_actions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/action" }
+    },
+    "verification_queue": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/verification" }
+    },
+    "capability_snapshot": {
+      "type": "object",
+      "properties": {
+        "web_search": { "type": "boolean" },
+        "maps": { "enum": ["native", "link_only", "unavailable"] },
+        "live_transport": { "type": "boolean" },
+        "images": { "type": "boolean" },
+        "file_export": {
+          "type": "array",
+          "items": { "enum": ["markdown", "html", "pdf", "json"] },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "provenance": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/evidence" }
+    },
+    "created_at": { "type": ["string", "null"], "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "scope": {
+      "type": ["object", "null"],
+      "properties": {
+        "type": { "enum": ["trip", "route", "city_block", "day", "item"] },
+        "id": { "type": ["string", "null"] },
+        "affected_dates": { "type": "array", "items": { "type": "string", "format": "date" } }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "money": {
+      "type": ["object", "null"],
+      "properties": {
+        "min": { "type": ["number", "null"] },
+        "max": { "type": ["number", "null"] },
+        "amount": { "type": ["number", "null"] },
+        "currency": { "type": ["string", "null"] },
+        "basis": { "type": ["string", "null"] },
+        "verification_status": { "$ref": "#/$defs/verificationStatus" }
+      },
+      "additionalProperties": true
+    },
+    "verificationStatus": {
+      "enum": ["not_checked", "unverified", "partially_verified", "verified", "source_conflict"]
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["source_type", "verification_status"],
+      "properties": {
+        "source_type": { "enum": ["traveler", "official", "map", "booking_platform", "guide", "community", "model_inference"] },
+        "source_label": { "type": ["string", "null"] },
+        "url": { "type": ["string", "null"] },
+        "checked_at": { "type": ["string", "null"], "format": "date-time" },
+        "claim": { "type": ["string", "null"] },
+        "verification_status": { "$ref": "#/$defs/verificationStatus" }
+      },
+      "additionalProperties": true
+    },
+    "trip": {
+      "type": "object",
+      "required": ["title", "destination", "duration_days", "entry", "exit"],
+      "properties": {
+        "title": { "type": ["string", "null"] },
+        "destination": { "type": ["string", "null"] },
+        "language": { "type": "string", "default": "zh-CN" },
+        "currency": { "type": ["string", "null"] },
+        "timezone": { "type": ["string", "null"] },
+        "start_date": { "type": ["string", "null"], "format": "date" },
+        "end_date": { "type": ["string", "null"], "format": "date" },
+        "duration_days": { "type": ["integer", "null"], "minimum": 1 },
+        "entry": { "$ref": "#/$defs/boundary" },
+        "exit": { "$ref": "#/$defs/boundary" },
+        "completion_estimate": { "type": ["number", "null"], "minimum": 0, "maximum": 1 }
+      },
+      "additionalProperties": true
+    },
+    "boundary": {
+      "type": ["object", "null"],
+      "properties": {
+        "place": { "type": ["string", "null"] },
+        "date": { "type": ["string", "null"], "format": "date" },
+        "time": { "type": ["string", "null"] },
+        "service_number": { "type": ["string", "null"] },
+        "status": { "enum": ["unknown", "tentative", "confirmed_by_user", "verified"] }
+      },
+      "additionalProperties": true
+    },
+    "traveler": {
+      "type": "object",
+      "properties": {
+        "party_size": { "type": ["integer", "null"], "minimum": 1 },
+        "party_type": { "type": ["string", "null"] },
+        "travel_style": { "type": "array", "items": { "type": "string" } },
+        "mobility": { "type": "object", "additionalProperties": true },
+        "hard_constraints": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "preferences": {
+      "type": "object",
+      "properties": {
+        "pace": { "type": ["string", "null"] },
+        "interests": { "type": "array", "items": { "type": "string" } },
+        "transport": { "type": "object", "additionalProperties": true },
+        "lodging": { "type": "object", "additionalProperties": true },
+        "food": { "type": "object", "additionalProperties": true },
+        "decision_policy": { "const": "traveler_decides" }
+      },
+      "additionalProperties": true
+    },
+    "routeSkeleton": {
+      "type": "object",
+      "required": ["status", "destination_pool", "route_corridor", "stops", "connections", "generation_mode"],
+      "properties": {
+        "status": { "type": "string" },
+        "mode": { "type": "string" },
+        "destination_pool": { "type": "array", "items": { "type": "string" } },
+        "route_corridor": { "type": "array", "items": { "type": "string" } },
+        "stops": { "type": "array", "items": { "$ref": "#/$defs/routeStop" } },
+        "connections": { "type": "array", "items": { "$ref": "#/$defs/connection" } },
+        "generation_mode": { "enum": ["undecided", "day_by_day", "one_pass_baseline"] },
+        "assumptions": { "type": "array", "items": { "type": "string" } },
+        "pending_impacts": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+      },
+      "additionalProperties": true
+    },
+    "routeStop": {
+      "type": "object",
+      "required": ["id", "name", "sequence", "role", "status"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "sequence": { "type": "integer", "minimum": 1 },
+        "role": { "type": "string" },
+        "status": { "enum": ["proposed", "confirmed", "locked"] },
+        "days": { "type": ["number", "null"], "minimum": 0 },
+        "nights": { "type": ["number", "null"], "minimum": 0 },
+        "parent_base_id": { "type": ["string", "null"] },
+        "selected_experience_ids": { "type": "array", "items": { "type": "string" } },
+        "fixed_anchor_ids": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "connection": {
+      "type": "object",
+      "required": ["id", "origin_stop_id", "destination_stop_id", "verification_status"],
+      "properties": {
+        "id": { "type": "string" },
+        "origin_stop_id": { "type": "string" },
+        "destination_stop_id": { "type": "string" },
+        "mode": { "type": ["string", "null"] },
+        "duration_minutes": { "type": ["integer", "null"], "minimum": 0 },
+        "verification_status": { "$ref": "#/$defs/verificationStatus" },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }
+      },
+      "additionalProperties": true
+    },
+    "placeDiscovery": {
+      "type": "object",
+      "required": ["mode", "candidate_items", "pagination"],
+      "properties": {
+        "mode": { "type": "string" },
+        "curiosity_seeds": { "type": "array", "items": { "type": "string" } },
+        "candidate_items": { "type": "array", "items": { "$ref": "#/$defs/place" } },
+        "rejected_item_ids": { "type": "array", "items": { "type": "string" } },
+        "trip_level_avoidances": { "type": "array", "items": { "type": "string" } },
+        "pagination": { "type": "object", "additionalProperties": true }
+      },
+      "additionalProperties": true
+    },
+    "place": {
+      "type": "object",
+      "required": ["id", "name", "type", "status", "verification_status"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "local_name": { "type": ["string", "null"] },
+        "type": { "type": "string" },
+        "status": { "enum": ["suggested", "saved", "interested", "must_do", "optional_fill", "not_interested_this_trip", "rejected"] },
+        "anchor_level": { "enum": ["locked", "must_do", "route_shaping", "flexible", "conditional_window", "end_of_day_optional"] },
+        "location": { "type": ["string", "null"] },
+        "address": { "type": ["string", "null"] },
+        "duration_range_minutes": {
+          "type": ["object", "null"],
+          "properties": { "min": { "type": "integer" }, "max": { "type": "integer" } },
+          "additionalProperties": false
+        },
+        "date_constraints": { "type": "array", "items": { "type": "string" } },
+        "reservation_status": { "type": ["string", "null"] },
+        "official_url": { "type": ["string", "null"] },
+        "verification_status": { "$ref": "#/$defs/verificationStatus" },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }
+      },
+      "additionalProperties": true
+    },
+    "lodging": {
+      "type": "object",
+      "required": ["planning_mode", "stays"],
+      "properties": {
+        "planning_mode": { "enum": ["undecided", "lodging_first", "route_first", "ai_assisted", "temporary_anchor"] },
+        "stays": { "type": "array", "items": { "$ref": "#/$defs/stay" } },
+        "candidate_areas": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+        "candidate_hotels": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+        "reflow_required_dates": { "type": "array", "items": { "type": "string", "format": "date" } }
+      },
+      "additionalProperties": true
+    },
+    "stay": {
+      "type": "object",
+      "required": ["id", "city", "hotel_name", "status"],
+      "properties": {
+        "id": { "type": "string" },
+        "city": { "type": "string" },
+        "hotel_name": { "type": "string" },
+        "check_in": { "type": ["string", "null"], "format": "date" },
+        "check_out": { "type": ["string", "null"], "format": "date" },
+        "nights": { "type": ["integer", "null"], "minimum": 1 },
+        "status": { "enum": ["candidate", "suggested_unconfirmed", "selected", "confirmed", "locked"] },
+        "reservation_status": { "type": ["string", "null"] },
+        "nightly_budget": { "$ref": "#/$defs/money" },
+        "provider_urls": { "type": ["object", "null"], "additionalProperties": { "type": ["string", "null"] } },
+        "verification_status": { "$ref": "#/$defs/verificationStatus" }
+      },
+      "additionalProperties": true
+    },
+    "dining": {
+      "type": "object",
+      "required": ["planning_mode", "restaurants", "booked_anchors"],
+      "properties": {
+        "planning_mode": { "type": "string" },
+        "hard_constraints": { "type": "array", "items": { "type": "string" } },
+        "soft_preferences": { "type": "array", "items": { "type": "string" } },
+        "budget": { "type": "object", "additionalProperties": true },
+        "restaurants": { "type": "array", "items": { "$ref": "#/$defs/restaurant" } },
+        "booked_anchors": { "type": "array", "items": { "type": "string" } },
+        "reflow_required_dates": { "type": "array", "items": { "type": "string", "format": "date" } }
+      },
+      "additionalProperties": true
+    },
+    "restaurant": {
+      "type": "object",
+      "required": ["id", "name", "status", "verification_status"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "status": { "enum": ["candidate", "selected_unbooked", "reservation_required", "reservation_recommended", "booked", "walk_in_risk_accepted", "skipped"] },
+        "date": { "type": ["string", "null"], "format": "date" },
+        "meal_slot": { "type": ["string", "null"] },
+        "reservation_time": { "type": ["string", "null"] },
+        "address": { "type": ["string", "null"] },
+        "price": { "$ref": "#/$defs/money" },
+        "verification_status": { "$ref": "#/$defs/verificationStatus" },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }
+      },
+      "additionalProperties": true
+    },
+    "itinerary": {
+      "type": "object",
+      "required": ["status", "generation_mode", "days"],
+      "properties": {
+        "status": { "type": "string" },
+        "generation_mode": { "enum": ["undecided", "day_by_day", "one_pass_baseline"] },
+        "active_city_block_id": { "type": ["string", "null"] },
+        "assumptions": { "type": "array", "items": { "type": "string" } },
+        "reflow_triggers": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+        "days": { "type": "array", "items": { "$ref": "#/$defs/day" } }
+      },
+      "additionalProperties": true
+    },
+    "day": {
+      "type": "object",
+      "required": ["id", "day_number", "date", "base_city", "status", "items", "route_legs", "validation_status", "confirmation_status"],
+      "properties": {
+        "id": { "type": "string" },
+        "day_number": { "type": "integer", "minimum": 1 },
+        "date": { "type": ["string", "null"], "format": "date" },
+        "base_city": { "type": ["string", "null"] },
+        "theme": { "type": ["string", "null"] },
+        "status": { "enum": ["empty", "draft", "provisional", "validated", "confirmed", "reopened"] },
+        "start_anchor": { "type": ["string", "null"] },
+        "end_anchor": { "type": ["string", "null"] },
+        "lodging_stay_id": { "type": ["string", "null"] },
+        "items": { "type": "array", "items": { "$ref": "#/$defs/dayItem" } },
+        "route_legs": { "type": "array", "items": { "$ref": "#/$defs/routeLeg" } },
+        "open_windows": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+        "plan_b": { "type": "object", "additionalProperties": true },
+        "assumptions": { "type": "array", "items": { "type": "string" } },
+        "validation_status": { "type": "string" },
+        "confirmation_status": { "enum": ["unconfirmed", "confirmed", "reopened"] }
+      },
+      "additionalProperties": true
+    },
+    "dayItem": {
+      "type": "object",
+      "required": ["id", "kind", "title", "anchor_level", "sequence", "status", "verification_status"],
+      "properties": {
+        "id": { "type": "string" },
+        "source_item_id": { "type": ["string", "null"] },
+        "kind": { "type": "string" },
+        "title": { "type": "string" },
+        "anchor_level": { "type": "string" },
+        "sequence": { "type": "integer", "minimum": 1 },
+        "time_block": { "type": ["object", "null"], "additionalProperties": true },
+        "duration_range_minutes": { "type": ["object", "null"], "additionalProperties": true },
+        "status": { "type": "string" },
+        "verification_status": { "$ref": "#/$defs/verificationStatus" }
+      },
+      "additionalProperties": true
+    },
+    "routeLeg": {
+      "type": "object",
+      "required": ["id", "from_item_id", "to_item_id", "verification_status"],
+      "properties": {
+        "id": { "type": "string" },
+        "from_item_id": { "type": "string" },
+        "to_item_id": { "type": "string" },
+        "mode": { "type": ["string", "null"] },
+        "departure": { "type": ["string", "null"] },
+        "arrival": { "type": ["string", "null"] },
+        "duration_minutes": { "type": ["integer", "null"], "minimum": 0 },
+        "line_name": { "type": ["string", "null"] },
+        "direction": { "type": ["string", "null"] },
+        "board_at": { "type": ["string", "null"] },
+        "alight_at": { "type": ["string", "null"] },
+        "schedule_confidence": { "enum": ["source_backed", "user_fixed", "estimated_unverified"] },
+        "verification_status": { "$ref": "#/$defs/verificationStatus" },
+        "map_links": { "type": "object", "additionalProperties": { "type": ["string", "null"] } },
+        "plan_b": { "type": ["object", "null"], "additionalProperties": true }
+      },
+      "additionalProperties": true
+    },
+    "validation": {
+      "type": "object",
+      "required": ["issues", "accepted_tradeoffs", "last_validated_at"],
+      "properties": {
+        "last_validated_at": { "type": ["string", "null"], "format": "date-time" },
+        "validation_scope": { "$ref": "#/$defs/scope" },
+        "issues": { "type": "array", "items": { "$ref": "#/$defs/issue" } },
+        "accepted_tradeoffs": { "type": "array", "items": { "type": "string" } },
+        "proposed_patches": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+      },
+      "additionalProperties": true
+    },
+    "issue": {
+      "type": "object",
+      "required": ["id", "type", "severity", "status", "summary", "traveler_decision_required"],
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": ["string", "null"], "format": "date" },
+        "type": { "type": "string" },
+        "severity": { "enum": ["blocking", "high", "medium", "low", "info"] },
+        "status": { "enum": ["open", "accepted", "resolved", "deferred", "invalidated"] },
+        "summary": { "type": "string" },
+        "cause": { "type": ["string", "null"] },
+        "traveler_decision_required": { "type": "boolean" },
+        "verification_status": { "$ref": "#/$defs/verificationStatus" },
+        "options": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }
+      },
+      "additionalProperties": true
+    },
+    "decision": {
+      "type": "object",
+      "required": ["id", "scope", "decision", "status", "decided_by", "decided_at"],
+      "properties": {
+        "id": { "type": "string" },
+        "scope": { "$ref": "#/$defs/scope" },
+        "decision": { "type": "string" },
+        "status": { "enum": ["proposed", "selected", "confirmed", "locked", "superseded"] },
+        "decided_by": { "enum": ["traveler", "agent_assumption"] },
+        "decided_at": { "type": "string", "format": "date-time" },
+        "supersedes": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "action": {
+      "type": "object",
+      "required": ["id", "type", "status", "owner"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "summary": { "type": ["string", "null"] },
+        "status": { "enum": ["open", "deferred", "done", "cancelled"] },
+        "owner": { "enum": ["traveler", "agent", "external"] },
+        "scope": { "$ref": "#/$defs/scope" },
+        "due_at": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "verification": {
+      "type": "object",
+      "required": ["id", "fact_type", "status", "scope"],
+      "properties": {
+        "id": { "type": "string" },
+        "fact_type": { "type": "string" },
+        "claim": { "type": ["string", "null"] },
+        "status": { "$ref": "#/$defs/verificationStatus" },
+        "scope": { "$ref": "#/$defs/scope" },
+        "priority": { "enum": ["blocking", "high", "medium", "low"] },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }
+      },
+      "additionalProperties": true
+    }
+  }
+}

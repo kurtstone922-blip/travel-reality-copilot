@@ -1,0 +1,33 @@
+{
+  "name": "travel-copilot-kit-v0.1",
+  "version": "0.1.0",
+  "description": "A participatory AI travel-planning capability pack that coordinates route, discovery, lodging, dining, itinerary arrangement and reality validation without taking decisions away from the traveler.",
+  "author": {
+    "name": "Weicheng Shi"
+  },
+  "license": "LicenseRef-Personal-Evaluation-Only",
+  "keywords": [
+    "travel",
+    "agent",
+    "itinerary",
+    "planning",
+    "ai-native-design"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Travel Reality Copilot",
+    "shortDescription": "Build executable, personal itineraries through traveler-led decisions",
+    "longDescription": "Turn incomplete travel intent into a route, selected experiences, lodging, dining and daily movement through progressive decisions. The Agent stops at meaningful trade-offs and keeps uncertain live facts visible as verification work.",
+    "developerName": "Weicheng Shi",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive"
+    ],
+    "defaultPrompt": [
+      "Plan this trip with me step by step instead of generating everything at once.",
+      "Organize my saved places into a route without silently removing my choices.",
+      "验证这份行程是否真的走得通，并把最终决定权留给我。"
+    ],
+    "brandColor": "#1769E0"
+  }
+}

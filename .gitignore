@@ -1,0 +1,16 @@
+.DS_Store
+node_modules/
+*.log
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+credentials.*.json
+secrets.json
+secrets.*.json
+trip-state.local.json
+exports/

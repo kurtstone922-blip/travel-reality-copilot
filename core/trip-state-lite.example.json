@@ -1,0 +1,45 @@
+{
+  "schema_version": "0.1.0",
+  "state_id": "trip-example-japan-001",
+  "revision": 3,
+  "current_phase": "itinerary_arrangement",
+  "active_scope": {
+    "type": "city_block",
+    "id": "tokyo-block",
+    "affected_dates": ["2026-10-02", "2026-10-03"]
+  },
+  "trip": {
+    "destination": "日本",
+    "start_date": "2026-10-01",
+    "end_date": "2026-10-08",
+    "entry": "东京羽田机场 2026-10-01 15:20",
+    "exit": "关西国际机场 2026-10-08 21:30"
+  },
+  "traveler_constraints": [],
+  "active_preferences": {
+    "pace": "compact_but_executable",
+    "interests": ["建筑与美术馆", "城市散步", "在地饮食"],
+    "hotel_loyalty": ["Marriott Bonvoy"]
+  },
+  "route": ["东京", "高松", "大阪"],
+  "generation_mode": "day_by_day",
+  "locked_items": [],
+  "active_lodging": {
+    "id": "stay-tokyo-01",
+    "city": "东京",
+    "status": "selected"
+  },
+  "active_dining_anchors": [],
+  "active_days": [
+    {
+      "id": "day-02",
+      "date": "2026-10-02",
+      "base_city": "东京",
+      "items": ["森美术馆"],
+      "status": "draft"
+    }
+  ],
+  "open_decisions": ["确认或调整东京 Day 2"],
+  "blocking_or_high_issues": [],
+  "verification_needed": ["森美术馆在计划日期开放"]
+}
