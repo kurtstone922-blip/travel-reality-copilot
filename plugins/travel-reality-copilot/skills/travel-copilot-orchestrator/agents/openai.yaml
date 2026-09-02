@@ -1,0 +1,4 @@
+interface:
+  display_name: "Travel Reality Copilot"
+  short_description: "Build executable, personal trips through progressive decisions"
+  default_prompt: "Use $travel-copilot-orchestrator to help me progressively plan or revise a trip while preserving my decisions."

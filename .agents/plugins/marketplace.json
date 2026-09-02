@@ -1,0 +1,20 @@
+{
+  "name": "travel-reality-copilot",
+  "interface": {
+    "displayName": "Travel Reality Copilot"
+  },
+  "plugins": [
+    {
+      "name": "travel-reality-copilot",
+      "source": {
+        "source": "local",
+        "path": "./plugins/travel-reality-copilot"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

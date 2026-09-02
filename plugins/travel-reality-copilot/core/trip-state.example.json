@@ -1,0 +1,214 @@
+{
+  "schema_version": "0.1.0",
+  "state_id": "trip-example-japan-001",
+  "revision": 3,
+  "status": "planning",
+  "current_phase": "itinerary_arrangement",
+  "active_scope": {
+    "type": "city_block",
+    "id": "tokyo-block",
+    "affected_dates": ["2026-10-02", "2026-10-03"]
+  },
+  "trip": {
+    "title": "日本关东与濑户内旅行",
+    "destination": "日本",
+    "language": "zh-CN",
+    "currency": "JPY",
+    "timezone": "Asia/Tokyo",
+    "start_date": "2026-10-01",
+    "end_date": "2026-10-08",
+    "duration_days": 8,
+    "entry": {
+      "place": "东京羽田机场",
+      "date": "2026-10-01",
+      "time": "15:20",
+      "service_number": null,
+      "status": "confirmed_by_user"
+    },
+    "exit": {
+      "place": "关西国际机场",
+      "date": "2026-10-08",
+      "time": "21:30",
+      "service_number": null,
+      "status": "tentative"
+    },
+    "completion_estimate": 0.46
+  },
+  "traveler": {
+    "party_size": 1,
+    "party_type": "solo",
+    "travel_style": ["structured", "high_mobility"],
+    "mobility": {},
+    "hard_constraints": []
+  },
+  "preferences": {
+    "pace": "compact_but_executable",
+    "interests": ["建筑与美术馆", "城市散步", "在地饮食"],
+    "transport": { "prefer_evening_transfer": true },
+    "lodging": { "loyalty_programs": ["Marriott Bonvoy"], "convenience_priority": true },
+    "food": { "hard_constraints": [], "local_specialties_preferred": true },
+    "decision_policy": "traveler_decides"
+  },
+  "route_skeleton": {
+    "status": "skeleton_confirmed",
+    "mode": "user_defined_skeleton",
+    "destination_pool": ["东京", "高松", "大阪"],
+    "route_corridor": ["东京", "高松", "大阪"],
+    "stops": [
+      { "id": "stop-tokyo", "name": "东京", "sequence": 1, "role": "overnight_base", "status": "confirmed", "days": 3, "nights": 3, "parent_base_id": null, "selected_experience_ids": ["place-mori"], "fixed_anchor_ids": [] },
+      { "id": "stop-takamatsu", "name": "高松", "sequence": 2, "role": "overnight_base", "status": "confirmed", "days": 3, "nights": 2, "parent_base_id": null, "selected_experience_ids": [], "fixed_anchor_ids": [] },
+      { "id": "stop-osaka", "name": "大阪", "sequence": 3, "role": "exit_base", "status": "confirmed", "days": 2, "nights": 2, "parent_base_id": null, "selected_experience_ids": [], "fixed_anchor_ids": [] }
+    ],
+    "connections": [
+      { "id": "connection-tokyo-takamatsu", "origin_stop_id": "stop-tokyo", "destination_stop_id": "stop-takamatsu", "mode": "rail", "duration_minutes": null, "verification_status": "unverified", "evidence": [] }
+    ],
+    "generation_mode": "day_by_day",
+    "assumptions": [],
+    "pending_impacts": []
+  },
+  "place_discovery": {
+    "mode": "gap_completion",
+    "curiosity_seeds": ["东京城市与美术馆"],
+    "candidate_items": [
+      {
+        "id": "place-mori",
+        "name": "森美术馆",
+        "local_name": "森美術館",
+        "type": "museum",
+        "status": "must_do",
+        "anchor_level": "must_do",
+        "location": "六本木",
+        "address": null,
+        "duration_range_minutes": { "min": 90, "max": 180 },
+        "date_constraints": [],
+        "reservation_status": "unknown",
+        "official_url": null,
+        "verification_status": "unverified",
+        "evidence": []
+      }
+    ],
+    "rejected_item_ids": [],
+    "trip_level_avoidances": [],
+    "pagination": { "surface": "conversation", "page_size": 8, "shown_item_ids": ["place-mori"], "has_more": true }
+  },
+  "lodging": {
+    "planning_mode": "lodging_first",
+    "stays": [
+      {
+        "id": "stay-tokyo-01",
+        "city": "东京",
+        "hotel_name": "用户已选酒店",
+        "check_in": "2026-10-01",
+        "check_out": "2026-10-04",
+        "nights": 3,
+        "status": "selected",
+        "reservation_status": "not_reported",
+        "nightly_budget": null,
+        "provider_urls": null,
+        "verification_status": "unverified"
+      }
+    ],
+    "candidate_areas": [],
+    "candidate_hotels": [],
+    "reflow_required_dates": []
+  },
+  "dining": {
+    "planning_mode": "decide_day_by_day",
+    "hard_constraints": [],
+    "soft_preferences": ["在地料理"],
+    "budget": {},
+    "restaurants": [],
+    "booked_anchors": [],
+    "reflow_required_dates": []
+  },
+  "itinerary": {
+    "status": "in_progress",
+    "generation_mode": "day_by_day",
+    "active_city_block_id": "tokyo-block",
+    "assumptions": [],
+    "reflow_triggers": [],
+    "days": [
+      {
+        "id": "day-02",
+        "day_number": 2,
+        "date": "2026-10-02",
+        "base_city": "东京",
+        "theme": "六本木与城市夜景",
+        "status": "draft",
+        "start_anchor": "stay-tokyo-01",
+        "end_anchor": "stay-tokyo-01",
+        "lodging_stay_id": "stay-tokyo-01",
+        "items": [
+          {
+            "id": "day-02-item-01",
+            "source_item_id": "place-mori",
+            "kind": "museum",
+            "title": "森美术馆",
+            "anchor_level": "must_do",
+            "sequence": 1,
+            "time_block": { "start": "上午", "end": null, "precision": "window" },
+            "duration_range_minutes": { "min": 90, "max": 180 },
+            "status": "proposed",
+            "verification_status": "unverified"
+          }
+        ],
+        "route_legs": [],
+        "open_windows": [],
+        "plan_b": { "status": "not_requested", "baseline_preserved": true },
+        "assumptions": [],
+        "validation_status": "not_requested",
+        "confirmation_status": "unconfirmed"
+      }
+    ]
+  },
+  "validation": {
+    "last_validated_at": null,
+    "validation_scope": null,
+    "issues": [],
+    "accepted_tradeoffs": [],
+    "proposed_patches": []
+  },
+  "decisions": [
+    {
+      "id": "decision-generation-mode-001",
+      "scope": { "type": "trip", "id": null, "affected_dates": [] },
+      "decision": "使用 Day by Day 逐步生成",
+      "status": "confirmed",
+      "decided_by": "traveler",
+      "decided_at": "2026-09-03T10:00:00+08:00",
+      "supersedes": null
+    }
+  ],
+  "pending_actions": [
+    {
+      "id": "action-confirm-day-02",
+      "type": "traveler_confirmation",
+      "summary": "确认或调整东京 Day 2",
+      "status": "open",
+      "owner": "traveler",
+      "scope": { "type": "day", "id": "day-02", "affected_dates": ["2026-10-02"] },
+      "due_at": null
+    }
+  ],
+  "verification_queue": [
+    {
+      "id": "verify-mori-opening",
+      "fact_type": "opening_hours",
+      "claim": "森美术馆在计划日期开放",
+      "status": "not_checked",
+      "scope": { "type": "item", "id": "place-mori", "affected_dates": ["2026-10-02"] },
+      "priority": "high",
+      "evidence": []
+    }
+  ],
+  "capability_snapshot": {
+    "web_search": true,
+    "maps": "link_only",
+    "live_transport": false,
+    "images": false,
+    "file_export": ["markdown", "json"]
+  },
+  "provenance": [],
+  "created_at": "2026-09-03T09:00:00+08:00",
+  "updated_at": "2026-09-03T10:00:00+08:00"
+}
