@@ -50,9 +50,9 @@ Last reviewed: 2026-09-03
 - [x] Install the Plugin or Skills locally in Codex (`travel-copilot-kit-v0-1@personal`).
 - [x] Run model-level tests in a fresh Codex task.
 - [x] Record actual outputs for five critical interaction cases: 5/5 passed.
-- [ ] Decide whether the GitHub repository is private or public.
-- [ ] Choose the final repository name.
-- [ ] Add the final repository URL to the manifest after creation.
+- [x] GitHub repository created as Private.
+- [x] Final repository name: `travel-reality-copilot`.
+- [x] Final repository URL added to the manifest.
 - [ ] Review the custom License with qualified legal counsel if legal enforceability is important.
 
 Note: the local Plugin scaffolder normalized the source folder name `travel-copilot-kit-v0.1` to the Plugin ID `travel-copilot-kit-v0-1`. Choose one final naming convention before publishing.
