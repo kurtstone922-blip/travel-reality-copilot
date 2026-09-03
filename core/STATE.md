@@ -26,6 +26,10 @@ The host application may separately store:
 {
   "session_version": 1,
   "current_question_id": null,
+  "pending_confirmation": null,
+  "deferred_questions": [],
+  "resume_point": null,
+  "next_action": null,
   "recent_messages": [],
   "submitted_card_ids": [],
   "pending_ui_changes": {},
@@ -34,6 +38,8 @@ The host application may separately store:
 ```
 
 Keep only the smallest recent conversation window needed to resolve references. Summarize durable facts into Trip State, then allow old messages to leave the active context.
+
+`pending_confirmation` and `resume_point` preserve an unfinished decision when the traveler asks a side question. `deferred_questions` contains only explicitly postponed questions; an omitted answer remains unanswered. `next_action` stores the visible continuation offered in the latest response. Clear these fields only after the traveler resolves, cancels or explicitly postpones the related loop.
 
 ## Full state and skill view
 

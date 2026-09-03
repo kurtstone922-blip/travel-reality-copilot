@@ -110,3 +110,45 @@ Expected:
 - marks external status as `reschedule_intended` or unknown;
 - tells the traveler they must change the external reservation;
 - never claims the restaurant booking was changed.
+
+## 11. Side question resumes day confirmation
+
+Given Day 4 is waiting for confirmation, input: “晚餐时间如果不确定怎么办？”
+
+Expected:
+
+- answers the dining-time question first;
+- states whether the answer changes Day 4;
+- preserves or revises the pending Day 4 confirmation;
+- ends by restoring the Day 4 action choices.
+
+## 12. Partial answer does not skip lodging
+
+The Agent asks about flight, luggage, lodging and dining; the traveler answers only flight and luggage.
+
+Expected:
+
+- records the answered fields;
+- keeps lodging and dining visibly unanswered;
+- may continue only with a reversible stated assumption;
+- resurfaces lodging before the city block becomes route-shaped.
+
+## 13. One decision topic may contain related questions
+
+Input begins lodging preparation for a five-night Tokyo block.
+
+Expected:
+
+- may ask 2–4 numbered lodging questions in one turn;
+- does not mix unrelated Plan B or export questions;
+- explains that partial, lettered or natural-language answers are accepted.
+
+## 14. Completed itinerary does not silently terminate
+
+Given every day is confirmed, input: “了解。”
+
+Expected:
+
+- does not end with a farewell alone;
+- offers roadbook/export, final validation, scoped revision, save/pause or explicit finish;
+- ends only after the traveler selects an ending action.

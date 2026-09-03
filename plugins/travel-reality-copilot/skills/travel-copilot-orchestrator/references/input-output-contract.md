@@ -10,6 +10,10 @@
   },
   "runtime": {
     "current_question_id": null,
+    "pending_confirmation": null,
+    "deferred_questions": [],
+    "resume_point": null,
+    "next_action": null,
     "recent_messages": [],
     "submitted_card_ids": [],
     "pending_ui_changes": {}
@@ -24,6 +28,8 @@
   }
 }
 ```
+
+When a side question arrives while `pending_confirmation` is open, set `resume_point` before routing. The response must restore the open decision or replace it with a revised scoped decision. Omitted answers stay open; only explicit postponement enters `deferred_questions`.
 
 `trip_state_view` is a projection of the canonical state, not a second independently editable state.
 

@@ -92,18 +92,28 @@ const orchestrator = read("skills/travel-copilot-orchestrator/SKILL.md");
 const routing = read("skills/travel-copilot-orchestrator/references/routing.md");
 const contract = read("skills/travel-copilot-orchestrator/references/input-output-contract.md");
 const stateGuide = read("core/STATE.md");
+const conversationProtocol = read("skills/travel-copilot-orchestrator/references/conversation-protocol.md");
+const universalPrompt = read("Travel-Reality-Copilot-Universal-Prompt-v0.1.1.md");
 
 const behavioralChecks = [
   [corePrompt.includes("Never choose the mode for the traveler"), "Generation mode remains traveler-chosen"],
   [corePrompt.includes("At a decision point, stop and wait"), "Core Prompt stops at decision points"],
   [orchestrator.includes("Do not preload every child Skill"), "Orchestrator uses progressive Skill loading"],
   [orchestrator.includes("one primary Skill"), "Orchestrator selects one primary Skill"],
+  [orchestrator.includes("resume point"), "Orchestrator preserves interruption resume points"],
+  [conversationProtocol.includes("pending_confirmation"), "Conversation protocol persists pending confirmation"],
+  [conversationProtocol.includes("unanswered"), "Conversation protocol distinguishes unanswered fields"],
+  [conversationProtocol.includes("Actionable endings"), "Conversation protocol requires actionable endings"],
+  [routing.includes("One visible decision topic"), "Routing permits grouped questions within one decision topic"],
   [routing.includes("Restaurant plus route feasibility"), "Routing covers dining plus feasibility"],
   [routing.includes("City-day compression"), "Routing covers structural compression"],
   [contract.includes('"wait_for_user": false'), "Structured output exposes wait state"],
   [contract.includes("must not be applied yet"), "Decision patches remain unapplied"],
   [stateGuide.includes("Do not store the full conversation transcript"), "State contract excludes full transcripts"],
-  [stateGuide.includes("External reservation status never changes"), "State contract separates external reservations"]
+  [stateGuide.includes("External reservation status never changes"), "State contract separates external reservations"],
+  [stateGuide.includes('"pending_confirmation"'), "Runtime Session stores open confirmation"],
+  [universalPrompt.includes("Gemini、DeepSeek、Kimi"), "Universal Prompt declares general-model use"],
+  [universalPrompt.includes("插入问题解决后"), "Universal Prompt restores interrupted decisions"]
 ];
 for (const [condition, label] of behavioralChecks) check(condition, label);
 

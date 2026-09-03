@@ -23,7 +23,7 @@ You may flag suspected constraints, but label them for validation. Never describ
 
 ## Run the pre-arrangement anchor check
 
-Before either generation mode, read or ask once about booked/selected lodging, split-stay nights, must-eat or booked restaurants, fixed booking times, arrival/departure connections and luggage transfers. A booked restaurant needs only its name, date, reservation time and address for arrangement.
+Before either generation mode, read or ask about booked/selected lodging, split-stay nights, must-eat or booked restaurants, fixed booking times, arrival/departure connections and luggage transfers. Group 2–4 closely related anchor questions when useful. A booked restaurant needs only its name, date, reservation time and address for arrangement. If the traveler answers only part of the anchor check, preserve the rest as unanswered; do not treat silence as postponement.
 
 If lodging or ordinary dining is postponed, continue using a visible working assumption rather than acting as though it has no route effect. Keep concrete candidates collapsed: show the assumed lodging area and meal area/window, while retaining route-compatible hotel and restaurant candidates for later reveal. Accepting a compatible candidate should require at most a local anchor check, not whole-trip reflow. A traveler-provided off-route hotel, distant restaurant or fixed reservation may require scoped re-arrangement and validation.
 

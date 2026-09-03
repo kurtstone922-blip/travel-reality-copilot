@@ -81,12 +81,13 @@ Skills do not need to reread the entire conversation on every turn. The Orchestr
 
 ## Project status
 
-Current release: `0.1.0-alpha`
+Current release: `0.1.1-alpha`
 
 - Codex Plugin manifest: passed the local official validator.
 - Skills: 7/7 passed structural validation.
 - Automated contract checks: 75 passed, 0 failed.
 - Behavioral cases: cover the Orchestrator and all six business Skills.
+- Conversation continuity: interrupted confirmations, partial answers and explicit next actions are covered by the Orchestrator protocol.
 - Host compatibility: model-level testing is still required across Codex, Claude Code, Gemini and general web-based models.
 
 This is a research and personal-evaluation Alpha, not a booking service. Weather, transport, tickets, visas, prices, opening information and inventory should be verified with authoritative sources.
@@ -100,6 +101,8 @@ I want to spend 10 days in Japan, entering through Osaka and leaving from Fukuok
 ```
 
 See [EXAMPLES.md](EXAMPLES.md) for more interaction patterns.
+
+For non-plugin testing in Gemini, DeepSeek, Kimi or another general AI model, upload or paste [Travel-Reality-Copilot-Universal-Prompt-v0.1.1.md](Travel-Reality-Copilot-Universal-Prompt-v0.1.1.md) as one instruction document.
 
 ## Repository structure
 

@@ -44,6 +44,6 @@ Primary: Route Validator when the traveler asks whether it fits. Primary: Itiner
 
 Route Skeleton leads. It identifies affected city blocks, reservations, lodging nights and connections. Itinerary Arranger produces the compressed distribution only after the traveler confirms the structural change.
 
-## One visible question
+## One visible decision topic
 
-Several Skills may identify missing information, but ask the traveler only the highest-impact question for the current objective. Defer lower-impact questions until their answers can change the next result.
+Several Skills may identify missing information. Ask about only the highest-impact decision topic for the current objective, but allow 2–4 numbered questions that belong to that topic. Store unanswered or explicitly deferred items and restore them before they become route-shaping. Do not expose unrelated Skill questionnaires in the same turn.
