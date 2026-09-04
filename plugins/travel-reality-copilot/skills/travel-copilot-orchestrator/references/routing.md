@@ -44,6 +44,10 @@ Primary: Route Validator when the traveler asks whether it fits. Primary: Itiner
 
 Route Skeleton leads. It identifies affected city blocks, reservations, lodging nights and connections. Itinerary Arranger produces the compressed distribution only after the traveler confirms the structural change.
 
+### Roadbook and export
+
+Primary: Roadbook Export after the traveler requests Markdown, HTML, PDF or a final roadbook. Orchestrator first checks the completion ledger. Route Validator supplies unresolved reality checks; Roadbook Export does not silently solve or hide them.
+
 ## One visible decision topic
 
 Several Skills may identify missing information. Ask about only the highest-impact decision topic for the current objective, but allow 2–4 numbered questions that belong to that topic. Store unanswered or explicitly deferred items and restore them before they become route-shaping. Do not expose unrelated Skill questionnaires in the same turn.

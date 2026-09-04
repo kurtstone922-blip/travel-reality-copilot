@@ -37,7 +37,7 @@ check((manifest.interface?.defaultPrompt || []).length > 0 && manifest.interface
 
 const skillRoot = path.join(root, "skills");
 const skillDirectories = fs.readdirSync(skillRoot, { withFileTypes: true }).filter((entry) => entry.isDirectory());
-check(skillDirectories.length === 7, "Capability pack contains seven skills", `found ${skillDirectories.length}`);
+check(skillDirectories.length === 8, "Capability pack contains eight skills", `found ${skillDirectories.length}`);
 
 const expectedSkills = new Set([
   "travel-copilot-orchestrator",
@@ -47,6 +47,7 @@ const expectedSkills = new Set([
   "travel-dining-strategy",
   "travel-itinerary-arranger",
   "travel-route-validator"
+  ,"travel-roadbook-export"
 ]);
 
 for (const directory of skillDirectories) {
@@ -93,7 +94,10 @@ const routing = read("skills/travel-copilot-orchestrator/references/routing.md")
 const contract = read("skills/travel-copilot-orchestrator/references/input-output-contract.md");
 const stateGuide = read("core/STATE.md");
 const conversationProtocol = read("skills/travel-copilot-orchestrator/references/conversation-protocol.md");
-const universalPrompt = read("Travel-Reality-Copilot-Universal-Prompt-v0.1.1.md");
+const universalPrompt = read("Travel-Reality-Copilot-Universal-Prompt-v0.1.2.md");
+const arranger = read("skills/travel-itinerary-arranger/SKILL.md");
+const dining = read("skills/travel-dining-strategy/SKILL.md");
+const roadbook = read("skills/travel-roadbook-export/SKILL.md");
 
 const behavioralChecks = [
   [corePrompt.includes("Never choose the mode for the traveler"), "Generation mode remains traveler-chosen"],
@@ -114,11 +118,18 @@ const behavioralChecks = [
   [stateGuide.includes('"pending_confirmation"'), "Runtime Session stores open confirmation"],
   [universalPrompt.includes("Gemini、DeepSeek、Kimi"), "Universal Prompt declares general-model use"],
   [universalPrompt.includes("插入问题解决后"), "Universal Prompt restores interrupted decisions"]
+  ,[arranger.includes("D. 自定义安排"), "Day by Day offers custom arrangement"]
+  ,[arranger.includes("transport_batch"), "Arranger supports batch transport refinement"]
+  ,[dining.includes("Postponement is not omission"), "Deferred dining is explicitly resurfaced"]
+  ,[stateGuide.includes("Completion ledger"), "State contract defines trip completion ledger"]
+  ,[roadbook.includes("render-roadbook.mjs"), "Roadbook Skill uses deterministic HTML renderer"]
+  ,[universalPrompt.includes("一键细化全部日期"), "Universal Prompt exposes transport refinement modes"]
+  ,[universalPrompt.includes("HTML 应是无框架"), "Universal Prompt includes low-token local HTML behavior"]
 ];
 for (const [condition, label] of behavioralChecks) check(condition, label);
 
 const evalFiles = fs.readdirSync(path.join(root, "evals")).filter((name) => name.endsWith("-cases-v0.1.md"));
-check(evalFiles.length === 7, "Every Skill has an evaluation case file", `found ${evalFiles.length}`);
+check(evalFiles.length === 8, "Every Skill has an evaluation case file", `found ${evalFiles.length}`);
 for (const evalFile of evalFiles) {
   const caseCount = [...read(`evals/${evalFile}`).matchAll(/^##\s+(?:Case\s+)?\d+(?:\.|｜)/gm)].length;
   check(caseCount >= 5, `${evalFile} contains at least five cases`, `found ${caseCount}`);

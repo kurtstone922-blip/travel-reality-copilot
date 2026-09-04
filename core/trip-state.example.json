@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.1.1",
   "state_id": "trip-example-japan-001",
   "revision": 3,
   "status": "planning",
@@ -201,6 +201,15 @@
       "evidence": []
     }
   ],
+  "completion_ledger": {
+    "items": [
+      { "id": "complete-route", "domain": "route", "status": "completed", "blocking_final": false, "summary": "路线骨架已确认", "scope": { "type": "trip", "id": null, "affected_dates": [] }, "revisit_before": null, "source_skill": "travel-route-skeleton" },
+      { "id": "complete-dining", "domain": "dining", "status": "deferred", "blocking_final": true, "summary": "餐饮尚未决定具体餐厅、区域或弹性窗口", "scope": { "type": "city_block", "id": "tokyo-block", "affected_dates": ["2026-10-02", "2026-10-03"] }, "revisit_before": "roadbook", "source_skill": "travel-dining-strategy" },
+      { "id": "complete-transport", "domain": "transport_detail", "status": "missing", "blocking_final": true, "summary": "尚未选择交通细化模式", "scope": { "type": "trip", "id": null, "affected_dates": [] }, "revisit_before": "roadbook", "source_skill": "travel-itinerary-arranger" }
+    ],
+    "next_recommended_action": "确认东京 Day 2 后选择交通细化模式",
+    "last_checked_at": "2026-09-03T10:00:00+08:00"
+  },
   "capability_snapshot": {
     "web_search": true,
     "maps": "link_only",

@@ -28,6 +28,8 @@ For each turn:
 7. if the traveler interrupts with a side question, answer it and restore or revise the pending confirmation;
 8. otherwise apply it, increment `revision`, update `updated_at`, and recommend the next useful step.
 
+After each applied patch, refresh `completion_ledger`. Do not let deferred lodging, dining, transport or day confirmations disappear. Before city-block confirmation and final export, surface unresolved required items and distinguish them from non-blocking verification reminders.
+
 Never rewrite the complete state when a scoped patch is sufficient. Preserve unrelated confirmed days and accepted trade-offs.
 
 ## Skill routing
@@ -38,6 +40,7 @@ Never rewrite the complete state when a scoped patch is sufficient. Preserve unr
 - food constraints, dining strategy, restaurant candidates, reservations or meal coverage → `travel-dining-strategy`
 - distributing selected items across dates, sequencing a day, route legs or opt-in Plan B → `travel-itinerary-arranger`
 - feasibility, opening/closure, reservation/access risk, last service, overload or backtracking → `travel-route-validator`
+- final Markdown, local HTML, compact PDF or JSON roadbook → `travel-roadbook-export`
 
 When one request spans several domains, choose the Skill that owns the user's primary requested outcome. Invoke supporting Skills internally only when their result is required for that outcome. Ask the traveler one combined decision question rather than exposing several competing modules.
 
@@ -51,7 +54,9 @@ Use the existing information level rather than forcing every traveler through a 
 - selected places and anchors → Itinerary Arranger;
 - proposed or changed day → Route Validator;
 - confirmed days/city blocks → continue the next scope;
-- sufficient itinerary detail → offer roadbook generation while clearly retaining unresolved verification tasks.
+- sufficient itinerary detail → offer roadbook generation while clearly retaining unresolved verification tasks;
+- confirmed itinerary and lodging → offer transport refinement mode: Day by Day (recommended), batch refinement, risk scan or defer;
+- requested export → run completion check, then hand off to `travel-roadbook-export`.
 
 Lodging and dining can enter before arrangement when already selected, booked or route-shaping. If postponed, use visible working assumptions and only reopen affected dates when a later choice materially changes the route.
 

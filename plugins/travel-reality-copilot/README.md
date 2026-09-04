@@ -57,6 +57,7 @@ Travel Reality Copilot therefore treats itinerary planning as progressive decisi
 | `travel-dining-strategy` | Dietary constraints, food preferences, restaurants, reservations and experience coverage |
 | `travel-itinerary-arranger` | Cross-day distribution, daily sequence, route legs, flexible windows and opt-in Plan B |
 | `travel-route-validator` | Feasibility, opening, access, reservations, final services, backtracking and overload risk |
+| `travel-roadbook-export` | Low-token Markdown, local HTML, compact PDF and JSON roadbook export |
 
 ## Two generation modes
 
@@ -81,11 +82,11 @@ Skills do not need to reread the entire conversation on every turn. The Orchestr
 
 ## Project status
 
-Current release: `0.1.1-alpha`
+Current release: `0.1.2-alpha`
 
 - Codex Plugin manifest: passed the local official validator.
-- Skills: 7/7 passed structural validation.
-- Automated contract checks: 75 passed, 0 failed.
+- Skills: 8/8 passed structural validation.
+- Automated contract checks: 96 passed, 0 failed.
 - Behavioral cases: cover the Orchestrator and all six business Skills.
 - Conversation continuity: interrupted confirmations, partial answers and explicit next actions are covered by the Orchestrator protocol.
 - Host compatibility: model-level testing is still required across Codex, Claude Code, Gemini and general web-based models.
@@ -102,7 +103,7 @@ I want to spend 10 days in Japan, entering through Osaka and leaving from Fukuok
 
 See [EXAMPLES.md](EXAMPLES.md) for more interaction patterns.
 
-For non-plugin testing in Gemini, DeepSeek, Kimi or another general AI model, upload or paste [Travel-Reality-Copilot-Universal-Prompt-v0.1.1.md](Travel-Reality-Copilot-Universal-Prompt-v0.1.1.md) as one instruction document.
+For non-plugin testing in Gemini, DeepSeek, Kimi or another general AI model, upload or paste [Travel-Reality-Copilot-Universal-Prompt-v0.1.2.md](Travel-Reality-Copilot-Universal-Prompt-v0.1.2.md) as one instruction document.
 
 ## Repository structure
 
@@ -136,7 +137,7 @@ node evals/run-contract-checks.mjs .
 Expected result:
 
 ```text
-75 passed, 0 failed
+96 passed, 0 failed
 ```
 
 ## Privacy and cost

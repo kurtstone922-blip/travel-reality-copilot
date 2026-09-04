@@ -63,6 +63,8 @@ Allowed `action` values:
 - `request_decision`;
 - `apply_safe_patch`;
 - `offer_roadbook`;
+- `run_completion_check`;
+- `handoff_roadbook_export`;
 - `report_limitation`.
 
 ## Decision object

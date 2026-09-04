@@ -9,7 +9,7 @@ Coordinate the capability pack around a single canonical Trip State. Preserve tr
 
 ## Load the minimum required context
 
-Read `../../core/core-prompt-v0.1.md` for product behavior and `../../core/STATE.md` for state ownership and patch rules. Use `../../core/trip-state.schema.json` when producing or validating structured state.
+Read `../../core/core-prompt-v0.1.md` for product behavior and `../../core/STATE.md` for state ownership, completion-ledger and patch rules. Use `../../core/trip-state.schema.json` when producing or validating structured state.
 
 Read `references/routing.md` when the request spans multiple domains or when the next Skill is ambiguous. Always follow `references/conversation-protocol.md` for open questions, interruption recovery and response endings. Read `references/input-output-contract.md` when structured orchestration output is required.
 
@@ -30,6 +30,8 @@ For every traveler turn:
 9. If traveler choice is required, present one coherent decision topic and wait. Otherwise apply safe scoped patches, increment the revision and continue.
 10. End with an explicit action menu or continuation cue unless the traveler explicitly ends or pauses the session.
 
+After every applied patch, update `completion_ledger`. It acts as the trip's quiet project manager: it distinguishes complete, in-progress, missing, deferred, explicitly skipped and verification-needed work, and selects the next useful unresolved item without forcing the traveler to follow a rigid sequence.
+
 The visible conversation may combine results from several Skills, but it should feel like one Agent with one current objective.
 
 ## Missing information
@@ -41,6 +43,8 @@ Use “缺什么补什么” progressively:
 - Do not force lodging or dining completion when they can safely remain visible working assumptions.
 - Never interpret a missing answer as “skip.” Record it as unanswered; only explicit postponement becomes deferred.
 - Do not mistake long voice or text input for permission to generate the whole trip. Summarize it, identify gaps, and offer the traveler the generation-mode choice at the correct stage.
+
+Before a city-block confirmation and before roadbook export, run a completion check. Lodging for overnight dates, itinerary confirmation, dining disposition and material transport coverage need an explicit state. Tickets, opening times, prices and other live facts may remain verification reminders. Offer a provisional export with visible open items; do not falsely label it final.
 
 ## Multi-intent requests
 

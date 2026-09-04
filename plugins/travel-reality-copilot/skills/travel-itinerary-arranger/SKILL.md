@@ -38,6 +38,21 @@ Offer both modes after the anchor check. Put `day_by_day` first and label it rec
 
 A date edited after one-pass generation enters the same local editing and confirmation behavior as Day by Day.
 
+## Offer a custom arrangement path
+
+When presenting meaningful Day by Day route variants, always include a traveler-defined option after the Agent proposals. Use a compact structure such as A recommended, B alternative, C lighter or higher-intensity when genuinely distinct, and D custom arrangement. Do not manufacture three variants when only one route is sensible; still offer `D. 自定义安排` so the traveler can specify order, timing, priorities or free windows in natural language.
+
+## Separate transport-detail mode from itinerary generation
+
+After lodging and the itinerary structure are settled, let the traveler choose how to refine transport:
+
+- `transport_day_by_day` — recommended for complex, tight or reservation-heavy trips; refine one day, surface risks and confirm before continuing;
+- `transport_batch` — fill route legs across all requested dates, then summarize clear days and group only exceptions that need decisions;
+- `transport_risk_scan` — inspect major connections and risks without filling every leg;
+- `transport_deferred` — postpone while keeping the completion item open.
+
+Batch refinement is not one-click itinerary generation: traveler-selected places and dates remain unchanged. Populate ordinary no-conflict legs without interruption, preserve evidence status, then present blocking/high issues first and lower-confidence verification items separately. Never invent exact services when no timetable capability exists.
+
 ## Build the arrangement
 
 1. Place locked and fixed-date/time anchors first.

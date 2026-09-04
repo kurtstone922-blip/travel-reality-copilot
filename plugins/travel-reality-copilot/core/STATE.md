@@ -14,7 +14,8 @@ Store only durable planning facts and traveler-owned decisions:
 - lodging and dining anchors;
 - arranged days and route legs;
 - validation issues, accepted trade-offs and verification work;
-- decisions, pending actions and source provenance.
+- decisions, pending actions and source provenance;
+- a compact completion ledger that records unresolved planning domains without storing the transcript.
 
 Do not store the full conversation transcript in this object.
 
@@ -106,6 +107,13 @@ Rules:
 | `/decisions` | orchestrator | Skills may propose a decision record |
 | `/pending_actions` | orchestrator | Skills may add scoped actions |
 | `/verification_queue` | validator or orchestrator | all Skills may add unverified facts |
+| `/completion_ledger` | orchestrator | all Skills report scoped status changes |
+
+## Completion ledger
+
+The ledger is a durable summary of planning completeness, not a fixed wizard. Track route, places, lodging, dining, itinerary, transport detail, validation and roadbook with one of: `completed`, `in_progress`, `missing`, `deferred`, `explicitly_skipped` or `needs_verification`.
+
+Each item may include scope, summary, `revisit_before`, blocking status and source Skill. Lodging for overnight dates, intended day confirmations, dining disposition and material transport coverage require an explicit state before a roadbook is called final. Dining may complete as specific restaurants, meal areas/windows or an explicit decision not to plan it. Tickets, prices, weather and live opening/transport facts may remain non-blocking verification reminders and must remain visible in exported output.
 
 ## Confirmation invariant
 

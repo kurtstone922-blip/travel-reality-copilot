@@ -152,3 +152,19 @@ Expected:
 - does not end with a farewell alone;
 - offers roadbook/export, final validation, scoped revision, save/pause or explicit finish;
 - ends only after the traveler selects an ending action.
+
+## 15. Day route choices keep custom control
+
+Expected: when route variants are shown, the final option is `D. 自定义安排`; the Agent does not force three artificial variants when only one route is sensible.
+
+## 16. Transport refinement mode is separate
+
+Expected: after lodging and itinerary structure are confirmed, offers Day by Day transport, batch transport, risk scan or defer without regenerating traveler-selected places.
+
+## 17. Deferred dining returns
+
+Expected: dining postponed earlier is resurfaced after lodging/transport, before city-block confirmation or before roadbook export, and does not silently become complete.
+
+## 18. Completion ledger distinguishes reminders
+
+Expected: unresolved lodging/day/dining-disposition/transport coverage is separated from non-blocking ticket, weather, price and live-fact verification reminders.

@@ -42,6 +42,10 @@ Offer:
 - discover representative local foods before choosing restaurants;
 - postpone or omit dining planning.
 
+Postponement is not omission. When postponed, return a completion-ledger item with `status: deferred` and a suitable revisit point. Resurface dining after lodging, after transport refinement, before city-block confirmation, or before final roadbook export—whichever first makes the decision useful. Do not nag at every turn.
+
+Before final export, dining must resolve to one of: selected/booked restaurants, confirmed meal areas or flexible meal windows, or `explicitly_skipped`. The traveler never has to select a concrete restaurant, but silence must not be mistaken for a finished dining plan.
+
 When planning several days, first propose a modifiable food-experience mix rather than a wall of restaurant names. Cover selected highlights, not every meal by default. Leave remaining meals flexible unless the traveler asks for full dining coverage.
 
 ## Build and deduplicate the experience mix

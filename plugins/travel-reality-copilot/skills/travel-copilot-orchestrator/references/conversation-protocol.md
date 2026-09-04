@@ -58,8 +58,12 @@ Before arranging a city/stay block, expose lodging status: existing hotel, recom
 
 Also capture dining facts that can shape the route: booked or must-eat restaurants, reservation date/time, hard dietary constraints and food-led priorities. Ordinary flexible meals may remain route-compatible windows. After a day draft, proactively offer a small route-compatible restaurant set instead of waiting for the traveler to discover the Dining module.
 
+If dining is postponed, revisit it after lodging, after transport refinement, before city-block confirmation or before roadbook export. Resolve it as selected restaurants, meal areas/windows, or explicitly skipped; omission is not resolution.
+
 ## Actionable endings
 
 Unless the traveler explicitly pauses or ends, every traveler-facing response must end with what was resolved, any still-open item that matters now, a recommended next action first, and 2–5 compact lettered choices when there is a real choice. Allow replies by letters or natural language.
 
 Never end only with “好的,” a summary, or a farewell. After the full itinerary is confirmed, offer roadbook/export, final validation, selected-day revision, saving the current state, or ending the session. End only after the traveler chooses to do so.
+
+At milestone turns, show a compact completion snapshot rather than the full ledger. Prioritize required unresolved items; list ticket, opening-hour and similar checks as preparation reminders rather than blockers.

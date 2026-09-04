@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.2-alpha — 2026-09-04
+
+### Added
+
+- Completion Ledger for route, lodging, dining, itinerary, transport, validation and roadbook status.
+- Day by Day custom-arrangement option.
+- Separate Day by Day, batch and risk-scan transport refinement modes.
+- Dining revisit checkpoints after lodging/transport and before city-block confirmation or export.
+- Roadbook Export Skill with deterministic, dependency-free local HTML renderer and compact PDF guidance.
+- Universal Prompt V0.1.2 for Gemini, DeepSeek, Kimi and other general AI models.
+
 ## 0.1.1-alpha — 2026-09-03
 
 ### Changed

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:travel-reality-copilot:trip-state:0.1.0",
+  "$id": "urn:travel-reality-copilot:trip-state:0.1.1",
   "title": "AI Travel Reality Copilot Trip State",
   "description": "Canonical cross-skill state. Conversation transcripts and UI-only state are intentionally excluded.",
   "type": "object",
@@ -21,10 +21,11 @@
     "decisions",
     "pending_actions",
     "verification_queue",
+    "completion_ledger",
     "updated_at"
   ],
   "properties": {
-    "schema_version": { "const": "0.1.0" },
+    "schema_version": { "const": "0.1.1" },
     "state_id": { "type": "string", "minLength": 1 },
     "revision": { "type": "integer", "minimum": 0 },
     "status": {
@@ -65,6 +66,7 @@
       "type": "array",
       "items": { "$ref": "#/$defs/verification" }
     },
+    "completion_ledger": { "$ref": "#/$defs/completionLedger" },
     "capability_snapshot": {
       "type": "object",
       "properties": {
@@ -455,6 +457,34 @@
         "owner": { "enum": ["traveler", "agent", "external"] },
         "scope": { "$ref": "#/$defs/scope" },
         "due_at": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "completionLedger": {
+      "type": "object",
+      "required": ["items", "next_recommended_action"],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/completionItem" }
+        },
+        "next_recommended_action": { "type": ["string", "null"] },
+        "last_checked_at": { "type": ["string", "null"], "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "completionItem": {
+      "type": "object",
+      "required": ["id", "domain", "status", "blocking_final", "summary"],
+      "properties": {
+        "id": { "type": "string" },
+        "domain": { "enum": ["route", "places", "lodging", "dining", "itinerary", "transport_detail", "validation", "roadbook", "ticket_or_reservation", "other"] },
+        "status": { "enum": ["completed", "in_progress", "missing", "deferred", "explicitly_skipped", "needs_verification"] },
+        "blocking_final": { "type": "boolean" },
+        "summary": { "type": "string" },
+        "scope": { "$ref": "#/$defs/scope" },
+        "revisit_before": { "type": ["string", "null"] },
+        "source_skill": { "type": ["string", "null"] }
       },
       "additionalProperties": true
     },

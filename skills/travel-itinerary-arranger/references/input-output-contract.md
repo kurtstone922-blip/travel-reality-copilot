@@ -12,6 +12,7 @@ Read this reference for structured integration and tests. Pass only the active c
   "context": {
     "trigger": "discovery_selection_complete",
     "generation_mode": "day_by_day",
+    "transport_detail_mode": "undecided",
     "current_city_block_id": "tokyo-01",
     "current_day_id": null,
     "available_capabilities": {
@@ -80,6 +81,8 @@ Use one primary action:
 - `request_day_confirmation`;
 - `request_block_confirmation`;
 - `report_limitation`.
+
+Transport refinement may additionally use `ask_transport_detail_mode`, `present_transport_batch`, `present_transport_risk_scan` and `request_transport_issue_decisions`.
 
 ## City-block day distribution
 
@@ -171,6 +174,8 @@ Populate `recommended_service` or `next_service` only from a real timetable capa
 - `one_pass_baseline`: internally check reasonableness and avoid Agent-created overload before display. Later edits use scoped Day by Day behavior.
 - Run the lodging/dining anchor check before either mode. Booked restaurants need name, date, time and address.
 - When lodging/dining is postponed, expose the working area/window assumption but keep compatible concrete candidates collapsed.
+- Day by Day route choices include a final custom arrangement option whenever choices are shown.
+- Transport detail mode is chosen separately after itinerary structure and lodging: Day by Day, batch, risk scan or defer.
 
 ## Arrival/departure defaults
 

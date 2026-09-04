@@ -1,0 +1,4 @@
+interface:
+  display_name: "Travel Roadbook Export"
+  short_description: "Export a complete trip as local HTML, compact PDF, Markdown or JSON"
+  default_prompt: "Use $travel-roadbook-export to turn my confirmed Trip State into a practical local roadbook while keeping unresolved verification visible."

@@ -13,6 +13,7 @@ flowchart TD
     R --> DS[Dining Strategy]
     R --> IA[Itinerary Arranger]
     R --> RV[Route Validator]
+    R --> RE[Roadbook Export]
 
     RS --> P[Scoped patch proposal]
     PD --> P
@@ -20,6 +21,7 @@ flowchart TD
     DS --> P
     IA --> P
     RV --> P
+    RE --> P
 
     P --> D{Decision boundary?}
     D -- Yes --> C[Present one decision<br/>and wait for traveler]
@@ -27,6 +29,8 @@ flowchart TD
     D -- No --> M[Apply patch and<br/>increment revision]
     M --> T[(Canonical Trip State)]
     T --> O
+    T --> CL[Completion Ledger]
+    CL --> O
     T --> E[Roadbook export<br/>Markdown / HTML / PDF / JSON]
 ```
 

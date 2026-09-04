@@ -1,6 +1,6 @@
 {
   "name": "travel-reality-copilot",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A participatory AI travel-planning capability pack that coordinates route, discovery, lodging, dining, itinerary arrangement and reality validation without taking decisions away from the traveler.",
   "author": {
     "name": "Weicheng Shi"
